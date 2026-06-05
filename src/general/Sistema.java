@@ -1,15 +1,15 @@
 package general;
 
 import modelo.ZonaArreglo;
-import modelo.UsuarioArreglo;
-import modelo.Usuario;
-import modelo.VentaArreglo; // IMPORTANTE: Agregar esto
+import modelo.PersonaArreglo; // Cambiamos el import
+import modelo.Persona;        // Cambiamos el import
+import modelo.VentaArreglo;
 
 public class Sistema {
-    public static UsuarioArreglo usuarios = new UsuarioArreglo(100);
-    public static Usuario usuarioConectado = null;
-    public static ZonaArreglo zonas = new ZonaArreglo(4); 
+    // Ahora usamos la clase madre Persona para aplicar Polimorfismo
+    public static PersonaArreglo personas = new PersonaArreglo(100);
+    public static Persona personaConectada = null; 
     
-    // NUEVO: Nuestra base de datos para guardar el registro de todas las ventas
+    public static ZonaArreglo zonas = new ZonaArreglo(4); 
     public static VentaArreglo ventas = new VentaArreglo(100); 
 }

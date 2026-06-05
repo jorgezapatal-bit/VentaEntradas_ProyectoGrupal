@@ -19,8 +19,25 @@ public class ControladorVentas implements ActionListener {
         this.vista.cboZonas.addItem("VIP");
         this.vista.cboZonas.addItem("General");
         
-        // Activamos el botón
+        // Activamos el botón de Comprar
         this.vista.btnComprar.addActionListener(this);
+        
+        // Nuevo botón de Estadísticas
+        this.vista.btnEstadisticas.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                int totalUsuarios = general.Sistema.personas.totalPersonasPorTipo(0);
+                int totalClientes = general.Sistema.personas.totalPersonasPorTipo(1);
+                
+                javax.swing.JOptionPane.showMessageDialog(vista, 
+                    "Estadísticas del Sistema:\n" +
+                    "- Total de Usuarios: " + totalUsuarios + "\n" +
+                    "- Total de Clientes: " + totalClientes, 
+                    "Reporte Estadístico", 
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        
     }
 
     public void iniciar() {
