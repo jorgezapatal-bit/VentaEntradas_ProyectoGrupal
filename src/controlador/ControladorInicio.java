@@ -4,21 +4,24 @@ import general.Sistema;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import modelo.PersonaArreglo; // Import actualizado
-import vista.frmIniciar;
+import modelo.PersonaArreglo;
+import vista.frmPrincipal; 
 
 public class ControladorInicio {
-    private PersonaArreglo modelo; // Ahora recibe el arreglo polimórfico
-    private frmIniciar vista;
+    
+    private PersonaArreglo modelo;
+    private frmPrincipal vista; 
 
-    public ControladorInicio(PersonaArreglo modelo, frmIniciar vista) {
+    public ControladorInicio(PersonaArreglo modelo, frmPrincipal vista) {
         this.modelo = modelo;
         this.vista = vista;
         
+        // Asignamos el evento al botón de ingresar
         this.vista.btnIngresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    // Capturamos las credenciales ingresadas en las cajas de texto
                     String dni = vista.txtDni.getText();
                     String pass = vista.txtContrasena.getText();
                     
@@ -26,16 +29,15 @@ public class ControladorInicio {
                         throw new Exception("Por favor, ingrese su DNI y Contraseña.");
                     }
                     
-                    // Buscamos a la Persona (puede ser Usuario o Cliente)
+                    // Buscamos a la Persona (Usuario o Cliente) en el arreglo polimórfico
                     Sistema.personaConectada = modelo.ingresar(dni, pass);
                     
                     if (Sistema.personaConectada != null) {
                         JOptionPane.showMessageDialog(vista, "¡Bienvenido al sistema de Conciertos!");
                         
-                        vista.dispose(); 
-                        vista.frmVentas vVentas = new vista.frmVentas();
-                        controlador.ControladorVentas ctrlVentas = new controlador.ControladorVentas(vVentas);
-                        ctrlVentas.iniciar();
+                        // Obtenemos el CardLayout del panel central y avanzamos a la siguiente carta (Ventas)
+                        java.awt.CardLayout layout = (java.awt.CardLayout) vista.panCentro.getLayout();
+                        layout.next(vista.panCentro);
                         
                     } else {
                         JOptionPane.showMessageDialog(vista, "Error: DNI o contraseña incorrectos", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -46,10 +48,5 @@ public class ControladorInicio {
                 }
             }
         });
-    }
-    
-    public void iniciar() {
-        vista.setLocationRelativeTo(null);
-        vista.setVisible(true);
     }
 }

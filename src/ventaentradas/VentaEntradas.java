@@ -1,10 +1,11 @@
 package ventaentradas;
 
 import controlador.ControladorInicio;
+import controlador.ControladorVentas; // Importamos el controlador de ventas
 import general.Sistema;
 import modelo.Usuario;
 import modelo.Zona;
-import vista.frmIniciar;
+import vista.frmPrincipal; // Cambiamos el import a la ventana unificada
 
 public class VentaEntradas {
 
@@ -18,13 +19,16 @@ public class VentaEntradas {
         general.Sistema.zonas.add(new modelo.Zona("VIP", 50, 200));     
         general.Sistema.zonas.add(new modelo.Zona("General", 100, 50)); 
         
-        // 2. Instanciamos la vista y el controlador
-        vista.frmIniciar fInicio = new vista.frmIniciar();
+        // 2. Instanciamos la NUEVA vista unificada
+        vista.frmPrincipal ventana = new vista.frmPrincipal();
         
-        // Le pasamos el nuevo arreglo de personas
-        controlador.ControladorInicio controlador = new controlador.ControladorInicio(general.Sistema.personas, fInicio);
+        // Le pasamos el nuevo arreglo de personas y la MISMA ventana a ambos controladores
+        controlador.ControladorInicio ctrlInicio = new controlador.ControladorInicio(general.Sistema.personas, ventana);
+        controlador.ControladorVentas ctrlVentas = new controlador.ControladorVentas(ventana);
         
         // 3. ¡Arrancamos el programa!
-        controlador.iniciar();
+        ventana.setTitle("Sistema de Conciertos - Venta de Entradas");
+        ventana.setLocationRelativeTo(null);
+        ventana.setVisible(true);
     }
 }
