@@ -12,7 +12,10 @@ public class Usuario extends Persona {
 
     public void registrarZonas() { }
 
-    @Override public boolean registrarTarjeta() { return false; }
+    @Override 
+    public boolean registrarTarjeta() throws excepciones.TarjetaInvalidaException { 
+        return true; 
+    }
     @Override public boolean eliminarTarjeta() { return false; }
     @Override public boolean anularVenta() { return false; }
     @Override public boolean comprar() { return false; }

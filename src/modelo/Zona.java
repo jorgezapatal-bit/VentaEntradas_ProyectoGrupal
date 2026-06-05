@@ -26,9 +26,23 @@ public class Zona {
             throw new CapacidadExcedidaException("No hay suficiente capacidad en la zona " + nombre);
         }
         
-        // Simular la venta sumando a la cuenta manual
-        this.entradasVendidas += numero;
-        return null; 
+        // Creamos un arreglo temporal para guardar las entradas que se acaban de comprar
+        Entrada[] entradasCompradas = new Entrada[numero];
+        
+        for (int i = 0; i < numero; i++) {
+            // El número de entrada será el correlativo de las vendidas + 1
+            int numeroBoleto = this.entradasVendidas + 1;
+            Entrada nuevaEntrada = new Entrada(numeroBoleto, "VENDIDA");
+            
+            // Guardamos en nuestro arreglo de la zona y en el arreglo del cliente
+            this.entradas.add(nuevaEntrada); 
+            entradasCompradas[i] = nuevaEntrada;
+            
+            this.entradasVendidas++;
+        }
+        
+        // Ahora sí devolvemos las entradas reales en vez de null
+        return entradasCompradas; 
     }
 
     public String getNombre() { return nombre; }
