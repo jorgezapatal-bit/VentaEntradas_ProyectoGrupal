@@ -24,7 +24,7 @@ public class ControladorVentas {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    // 1. Capturamos TODO lo que el usuario escribió
+                    // 1. Capturamos todo lo que el usuario escribió
                     String nombreZona = vista.cboZonas.getSelectedItem().toString();
                     String cantTexto = vista.txtCantidad.getText();
                     String numTarjeta = vista.txtTarjeta.getText();
@@ -34,16 +34,15 @@ public class ControladorVentas {
                         throw new Exception("Por favor, ingrese la cantidad de entradas y su número de tarjeta.");
                     }
 
-                    // 3. ¡VALIDACIÓN DE TARJETA PRIMERO!
-                    // Validamos que al menos haya escrito algo coherente para una tarjeta
+                    // 3. Primero validamos que al menos haya escrito algo coherente para una tarjeta
                     if (numTarjeta.length() < 4) { 
                         throw new excepciones.TarjetaInvalidaException("Transacción denegada: Número de tarjeta inválido o muy corto.");
                     }
                     
-                    // Creamos la tarjeta ANTES de vender la entrada (pasándole el String)
+                    // Creamos la tarjeta antes de vender la entrada (pasándole el String)
                     modelo.Tarjeta tarjetaUsada = new modelo.Tarjeta(numTarjeta, "Cliente", "12/28", 123);
 
-                    // 4. Convertimos la cantidad a número (Si pone letras aquí, salta al catch de abajo)
+                    // 4. Convertimos la cantidad a número (Si pone letras, salta al catch de abajo)
                     int cantidad = Integer.parseInt(cantTexto);
                     
                     // 5. Buscamos la zona
@@ -52,7 +51,7 @@ public class ControladorVentas {
                         throw new Exception("La zona seleccionada no existe en la base de datos.");
                     }
 
-                    // 6. ¡LÓGICA DE NEGOCIO! (Generamos boletos y cobramos)
+                    // 6. LÓGICA DE NEGOCIO (Generamos boletos y cobramos)
                     modelo.Entrada[] boletosGenerados = zonaSeleccionada.venderEntrada(cantidad);
                     double totalPagar = cantidad * zonaSeleccionada.getPrecio();
                     
@@ -64,7 +63,7 @@ public class ControladorVentas {
                     general.Sistema.ventas.add(nuevaVenta);
                     System.out.println("Venta registrada exitosamente.");
 
-                    // 8. MOSTRAMOS LA BOLETA (El mensaje de éxito ahora sí va al final)
+                    // 8. MOSTRAMOS LA BOLETA (El mensaje de éxito va al final)
                     String resumen = "¡Venta exitosa!\n\n";
                     resumen += "Zona: " + nombreZona + "\n";
                     resumen += "Cantidad: " + cantidad + "\n";
